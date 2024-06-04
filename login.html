@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movies Info</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root{
+            --md-dark-color: #1d1d1d;
+            --dark-color: #171717;
+            --light-dark-color: #292929;
+            --yellow-color: #d4aa11;
+        }
+        *{
+            padding: 0;
+            margin: 0;
+            -webkit-box-sizing: border-box;
+                    box-sizing: border-box;
+        }
+        body{
+            font-family: 'Inter', sans-serif;
+            background-color: var(--dark-color);
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .login-container{
+            max-width: 400px;
+            width: 100%;
+            padding: 2rem;
+            background-color: var(--md-dark-color);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        .logo{
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .logo p{
+            font-size: 2rem;
+            font-weight: bold;
+        }
+        .logo p span{
+            color: var(--yellow-color);
+        }
+        .form-group{
+            margin-bottom: 1.5rem;
+        }
+        .form-group label{
+            display: block;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        .form-control{
+            width: 100%;
+            padding: 0.75rem;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            outline: none;
+        }
+        .form-control::placeholder{
+            color: var(--light-dark-color);
+        }
+        .btn{
+            width: 100%;
+            padding: 0.75rem;
+            font-size: 1rem;
+            font-weight: bold;
+            background-color: var(--yellow-color);
+            color: var(--dark-color);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 200ms ease;
+        }
+        .btn:hover{
+            background-color: darken(var(--yellow-color), 10%);
+        }
+        .footer{
+            text-align: center;
+            margin-top: 1rem;
+        }
+        .footer a{
+            color: var(--yellow-color);
+            text-decoration: none;
+        }
+        .error{
+            color: red;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container" id="loginContainer">
+        <div class="logo">
+            <p>Movies<span>Info</span></p>
+        </div>
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" class="form-control" placeholder="Enter your email" required>
+                <p class="error" id="emailError"></p>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" class="form-control" placeholder="Enter your password" required>
+                <p class="error" id="passwordError"></p>
+            </div>
+            <button type="submit" class="btn">Login</button>
+        </form>
+        <div class="footer">
+            <p>Don't have an account? <a href="#" id="showSignUp">Sign Up</a></p>
+        </div>
+    </div>
+
+    <div class="login-container" id="signupContainer" style="display: none;">
+        <div class="logo">
+            <p>My<span>Site</span></p>
+        </div>
+        <form id="signupForm">
+            <div class="form-group">
+                <label for="signupEmail">Email</label>
+                <input type="email" id="signupEmail" class="form-control" placeholder="Enter your email" required>
+                <p class="error" id="signupEmailError"></p>
+            </div>
+            <div class="form-group">
+                <label for="signupPassword">Password</label>
+                <input type="password" id="signupPassword" class="form-control" placeholder="Enter your password" required>
+                <p class="error" id="signupPasswordError"></p>
+            </div>
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword" class="form-control" placeholder="Confirm your password" required>
+                <p class="error" id="confirmPasswordError"></p>
+            </div>
+            <button type="submit" class="btn">Sign Up</button>
+        </form>
+        <div class="footer">
+            <p>Already have an account? <a href="#" id="showLogin">Login</a></p>
+        </div>
+    </div>
+    <script>
+  const defaultUser = { email: "Moniga@gmail.com", password: "Moniga@123" };
+        let users = JSON.parse(localStorage.getItem('users')) || [];
+
+        document.getElementById('showSignUp').addEventListener('click', function() {
+            document.getElementById('signupContainer').style.display = 'block';
+            document.getElementById('loginContainer').style.display = 'none';
+        });
+
+        document.getElementById('showLogin').addEventListener('click', function() {
+            document.getElementById('signupContainer').style.display = 'none';
+            document.getElementById('loginContainer').style.display = 'block';
+        });
+
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            document.getElementById('emailError').textContent = '';
+            document.getElementById('passwordError').textContent = '';
+
+            if (!validateEmail(email)) {
+                document.getElementById('emailError').textContent = 'Invalid email format';
+                return;
+            }
+
+            if (password.length < 6) {
+                document.getElementById('passwordError').textContent = 'Password must be at least 6 characters';
+                return;
+            }
+
+            const user = users.find(user => user.email === email && user.password === password);
+
+            if (user || (email === defaultUser.email && password === defaultUser.password)) {
+                window.location.href = 'index.html'; // Redirect to index.html
+            } else {
+                document.getElementById('emailError').textContent = 'Invalid email or password';
+            }
+        });
+
+  document.getElementById('signupForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const email = document.getElementById('signupEmail').value;
+    const password = document.getElementById('signupPassword').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+
+    document.getElementById('signupEmailError').textContent = '';
+    document.getElementById('signupPasswordError').textContent = '';
+    document.getElementById('confirmPasswordError').textContent = '';
+
+    if (!validateEmail(email)) {
+        document.getElementById('signupEmailError').textContent = 'Invalid email format';
+        return;
+    }
+
+    if (password.length < 6) {
+        document.getElementById('signupPasswordError').textContent = 'Password must be at least 6 characters';
+        return;
+    }
+
+    if (password !== confirmPassword) {
+        document.getElementById('confirmPasswordError').textContent = 'Passwords do not match';
+        return;
+    }
+
+    if (users.find(user => user.email === email)) {
+        document.getElementById('signupEmailError').textContent = 'Email already exists';
+        return;
+    }
+
+    users.push({ email, password });
+    localStorage.setItem('users', JSON.stringify(users));
+    alert('Sign up successful! You can now login.');
+    document.getElementById('showLogin').click();
+});
+
+function validateEmail(email) {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(String(email).toLowerCase());
+}
+    </script>
+</body>
+</html>

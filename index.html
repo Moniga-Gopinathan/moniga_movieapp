@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movies Info </title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="main.css">
+    <style>
+        :root{
+            --yellow-color: #d4aa11;
+            --red-color: #ff4d4d;
+            --dark-color: #171717;
+        }
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: var(--dark-color);
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            height: 100vh;
+        }
+        .wrapper {
+            display: flex;
+            width: 100%;
+            max-width: 1200px;
+            margin: 20px;
+        }
+        .logo .container {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .logo p {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+        .logo p span {
+            color: var(--yellow-color);
+        }
+        .search-container {
+            width: 75%;
+            padding: 20px;
+        }
+        .search-element {
+            margin-bottom: 1rem;
+        }
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            font-size: 1rem;
+            border-radius: 5px;
+            border: none;
+            outline: none;
+        }
+        .search-list {
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 10px;
+        }
+        .search-list-item {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            padding: 10px;
+            background-color: var(--dark-color);
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+        .search-item-thumbnail img {
+            width: 50px;
+            height: 75px;
+            margin-right: 20px;
+        }
+        .result-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .result-grid {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .movie-poster img {
+            width: 200px;
+        }
+        .movie-info {
+            margin-top: 20px;
+        }
+        .fav-button {
+            background-color: var(--yellow-color);
+            color: #fff;
+            border: none;
+            padding: 10px;
+            margin-top: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .fav-button.remove {
+            background-color: var(--red-color);
+        }
+        .favorites-container {
+            width: 25%;
+            padding: 20px;
+        }
+        .favorites-list {
+            max-height: 600px;
+            overflow-y: auto;
+            border: 1px solid #333;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .favorite-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            background-color: var(--dark-color);
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .favorite-item img {
+            width: 50px;
+            height: 75px;
+            margin-right: 20px;
+        }
+        .favorite-item button {
+            margin-left: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="favorites-container">
+            <h3>Favorites</h3>
+            <div class="favorites-list" id="favorites-list">
+            </div>
+        </div>   
+        <div class="main-content">
+            <div class="logo">
+                <div class="container">
+                    <p>Movies<span>Info</span></p>
+                </div>
+            </div>
+            <div class="search-container">
+                <div class="search-element">
+                    <h3>Search Movie:</h3>
+                    <input type="text" class="form-control" placeholder="Search Movie Title ..." id="movie-search-box" onkeyup="findMovies()" onclick="findMovies()">
+                    <div class="search-list" id="search-list">
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="result-container">
+                    <div class="result-grid" id="result-grid">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
